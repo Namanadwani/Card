@@ -41,10 +41,24 @@ export default function MainContent() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
-          className="font-serif text-maroon/60 text-xs tracking-[0.4em] uppercase mb-4"
+          className="font-serif text-maroon/60 text-xs tracking-[0.4em] uppercase mb-2"
         >
           Together with their families
         </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6 }}
+          className="mb-4 text-center"
+        >
+          <p className="font-sans text-maroon/50 text-[10px] tracking-wider">
+            Mr. Sushil Adwani & Mrs. Komal Adwani
+          </p>
+          <p className="font-sans text-maroon/50 text-[10px] tracking-wider">
+            Mr. Satish Varyani & Mrs. Sunita Varyani
+          </p>
+        </motion.div>
 
         <motion.h1
           initial={{ opacity: 0, y: 20 }}
@@ -52,7 +66,7 @@ export default function MainContent() {
           transition={{ delay: 0.7, duration: 0.8 }}
           className="font-script text-5xl md:text-7xl text-maroon text-center leading-tight"
         >
-          Naman
+          Harshit
         </motion.h1>
 
         <motion.div
@@ -70,7 +84,7 @@ export default function MainContent() {
           transition={{ delay: 1.2, duration: 0.8 }}
           className="font-script text-5xl md:text-7xl text-maroon text-center leading-tight"
         >
-          Sonia
+          Neha
         </motion.h1>
 
         <motion.p
@@ -80,6 +94,15 @@ export default function MainContent() {
           className="mt-6 font-serif text-gold-dark text-sm tracking-[0.3em] uppercase"
         >
           Are Getting Married
+        </motion.p>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.7 }}
+          className="mt-2 font-serif text-maroon/40 text-xs tracking-[0.2em]"
+        >
+          #HarshHitTheJackpot
         </motion.p>
 
         <motion.div

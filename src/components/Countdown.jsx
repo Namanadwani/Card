@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 
-const WEDDING_DATE = new Date('2025-12-15T10:00:00')
+const WEDDING_DATE = new Date('2025-06-22T13:00:00')
 
 function getTimeLeft() {
   const now = new Date()
@@ -78,7 +78,7 @@ export default function Countdown() {
           animate={{ opacity: [0.5, 1, 0.5] }}
           transition={{ duration: 3, repeat: Infinity }}
         >
-          December 15, 2025 • Save the Date
+          June 21–22, 2025 • Save the Date
         </motion.p>
       </motion.div>
     </section>

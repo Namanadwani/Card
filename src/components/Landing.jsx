@@ -54,7 +54,7 @@ export default function Landing({ onReveal }) {
 
           {/* Inner card peek */}
           <div className="absolute top-6 left-4 right-4 bottom-4 bg-white/80 border border-gold/20 rounded-sm flex items-center justify-center">
-            <p className="font-script text-maroon text-lg opacity-60">You're Invited</p>
+            <p className="font-script text-maroon text-lg opacity-60">Harshit & Neha</p>
           </div>
         </div>
 
@@ -79,7 +79,7 @@ export default function Landing({ onReveal }) {
           Wedding Invitation
         </p>
         <h1 className="font-script text-gold-dark text-3xl md:text-4xl mb-6">
-          You're Cordially Invited
+          Harshit & Neha
         </h1>
       </motion.div>
 

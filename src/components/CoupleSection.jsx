@@ -38,8 +38,9 @@ export default function CoupleSection() {
                 <circle cx="50" cy="15" r="3" fill="#800020" />
               </svg>
             </div>
-            <h3 className="mt-3 font-serif text-lg text-maroon">Naman</h3>
+            <h3 className="mt-3 font-serif text-lg text-maroon">Harshit</h3>
             <p className="text-xs text-maroon/50 font-sans">The Groom</p>
+            <p className="text-[10px] text-maroon/40 font-sans mt-0.5">S/o Mr. Sushil & Mrs. Komal Adwani</p>
           </motion.div>
 
           {/* Heart connector */}
@@ -77,8 +78,9 @@ export default function CoupleSection() {
                 <circle cx="50" cy="22" r="2" fill="#C8A951" />
               </svg>
             </div>
-            <h3 className="mt-3 font-serif text-lg text-maroon">Sonia</h3>
+            <h3 className="mt-3 font-serif text-lg text-maroon">Neha</h3>
             <p className="text-xs text-maroon/50 font-sans">The Bride</p>
+            <p className="text-[10px] text-maroon/40 font-sans mt-0.5">D/o Mr. Satish & Mrs. Sunita Varyani</p>
           </motion.div>
         </div>
 
@@ -87,10 +89,10 @@ export default function CoupleSection() {
           <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gold/30" />
           
           {[
-            { year: '2019', text: 'First Met', icon: '✨' },
-            { year: '2021', text: 'Started Dating', icon: '💕' },
-            { year: '2024', text: 'The Proposal', icon: '💍' },
-            { year: '2025', text: 'Forever Begins', icon: '🎊' },
+            { year: '2016', text: 'First Met', icon: '✨' },
+            { year: '2018', text: 'Started Dating', icon: '💕' },
+            { year: '2025', text: 'The Proposal', icon: '💍' },
+            { year: '2025', text: 'Forever Begins — June', icon: '🎊' },
           ].map((item, i) => (
             <motion.div
               key={i}

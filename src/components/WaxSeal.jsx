@@ -35,7 +35,7 @@ export default function WaxSeal() {
             fontFamily="'Great Vibes', cursive"
             opacity="0.9"
           >
-            N & S
+            H & N
           </text>
           
           {/* Small heart */}

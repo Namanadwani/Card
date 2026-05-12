@@ -32,10 +32,10 @@ export default function Footer() {
         </div>
 
         <p className="font-script text-2xl text-maroon mb-2">
-          Naman & Sonia
+          Harshit & Neha
         </p>
         <p className="font-serif text-xs text-maroon/50 tracking-[0.3em] uppercase">
-          December 15, 2025
+          June 21–22, 2025
         </p>
 
         <div className="mt-6 text-gold/40 text-xs">
@@ -51,7 +51,7 @@ export default function Footer() {
           className="mt-3 font-serif text-sm text-gold-dark/70"
           whileHover={{ scale: 1.05 }}
         >
-          #NamanWedsSonia
+          #HarshHitTheJackpot
         </motion.p>
       </motion.div>
     </footer>

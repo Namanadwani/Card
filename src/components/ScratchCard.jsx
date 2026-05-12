@@ -120,10 +120,10 @@ export default function ScratchCard({ onReveal }) {
                 Mark Your Calendar
               </p>
               <p className="font-script text-4xl text-maroon mt-1">
-                December 15
+                June 21 & 22
               </p>
               <p className="font-serif text-gold-dark text-lg mt-1">2025</p>
-              <p className="text-xs text-maroon/50 mt-2">Monday • Winter Wedding</p>
+              <p className="text-xs text-maroon/50 mt-2">Sunday & Monday • Summer Wedding</p>
             </motion.div>
           </div>
 
