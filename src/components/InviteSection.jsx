@@ -75,7 +75,7 @@ export default function InviteSection() {
           <GaneshIcon />
         </motion.div>
 
-        {/* Blessings of — CORRECTED ancestors */}
+        {/* Blessings */}
         <motion.p
           variants={reveal} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={2}
           style={{ fontFamily: 'Cormorant Upright, Georgia, serif', color: '#F3ECBA', fontSize: '18px', letterSpacing: '-0.03em', opacity: 0.8 }}
@@ -87,7 +87,7 @@ export default function InviteSection() {
           className="mt-1"
           style={{ fontFamily: 'Cormorant Upright, Georgia, serif', color: '#F3ECBA', fontSize: '20px', letterSpacing: '-0.02em' }}
         >
-          Late Shri Narsinghlal Adwani
+          Shri Narsinghlal Adwani
         </motion.p>
         <motion.p
           variants={reveal} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={2.7}
@@ -97,37 +97,10 @@ export default function InviteSection() {
         </motion.p>
 
         <GoldLine />
-        <GoldDiamond />
-        <GoldLine />
-
-        {/* Two family names */}
-        <motion.p
-          variants={reveal} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={3}
-          style={{ fontFamily: 'Cormorant Upright, Georgia, serif', color: '#F3ECBA', fontSize: '20px', letterSpacing: '-0.03em' }}
-        >
-          Mrs. Komal &amp; Mr. Sushil Adwani
-        </motion.p>
-
-        <motion.p
-          variants={reveal} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={3.3}
-          className="mt-1"
-          style={{ fontFamily: 'Cormorant Upright, Georgia, serif', color: '#F3ECBA60', fontSize: '22px' }}
-        >
-          ——
-        </motion.p>
-
-        <motion.p
-          variants={reveal} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={3.6}
-          style={{ fontFamily: 'Cormorant Upright, Georgia, serif', color: '#F3ECBA', fontSize: '20px', letterSpacing: '-0.03em' }}
-        >
-          Mrs. Sunita &amp; Mr. Satish Varyani
-        </motion.p>
-
-        <GoldLine />
 
         {/* INVITE big text */}
         <motion.p
-          variants={reveal} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={4}
+          variants={reveal} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={3}
           className="uppercase leading-none my-4"
           style={{
             fontFamily: 'Cormorant Infant, Georgia, serif',
