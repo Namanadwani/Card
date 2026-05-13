@@ -1,203 +1,283 @@
 import { motion } from 'framer-motion'
 
-const MAP = 'https://maps.app.goo.gl/mgomhZttvTdjHjrj8'
+const MAP_URL = 'https://maps.app.goo.gl/mgomhZttvTdjHjrj8'
 
-// ── Events ──────────────────────────────────────────────────────────────────
-// Carnival & Sangeet → 21st June 2026
-// All others        → 22nd June 2026
-const EVENTS = [
-  {
-    day:      'Day 1  ·  Sunday, 21st June 2026',
-    title:    'Carnival',
-    subtitle: 'Haldi Ceremony',
-    time:     '1:00 PM onwards',
-    icon:     '🌼',
-    from:     'from-yellow-50',
-    to:       'to-amber-50',
-    accent:   '#F59E0B',
-  },
-  {
-    day:      'Day 1  ·  Sunday, 21st June 2026',
-    title:    'Sangeet',
-    subtitle: 'DJ Night',
-    time:     '8:00 PM onwards',
-    icon:     '🎵',
-    from:     'from-purple-50',
-    to:       'to-pink-50',
-    accent:   '#9B59B6',
-  },
-  {
-    day:      'Day 2  ·  Monday, 22nd June 2026',
-    title:    'Dikh',
-    subtitle: 'The Auspicious Beginning',
-    time:     '12:30 PM',
-    icon:     '🙏',
-    from:     'from-orange-50',
-    to:       'to-amber-50',
-    accent:   '#EA580C',
-  },
-  {
-    day:      'Day 2  ·  Monday, 22nd June 2026',
-    title:    'Barat',
-    subtitle: 'The Grand Arrival',
-    time:     '1:00 PM',
-    icon:     '🐴',
-    from:     'from-red-50',
-    to:       'to-rose-50',
-    accent:   '#E74C3C',
-  },
-  {
-    day:      'Day 2  ·  Monday, 22nd June 2026',
-    title:    'Phere',
-    subtitle: 'The Sacred Vows',
-    time:     '3:00 PM',
-    icon:     '🔥',
-    from:     'from-red-50',
-    to:       'to-orange-50',
-    accent:   '#E74C3C',
-  },
-  {
-    day:      'Day 2  ·  Monday, 22nd June 2026',
-    title:    'Reception',
-    subtitle: 'An Evening of Celebration',
-    time:     '9:00 PM onwards',
-    icon:     '🥂',
-    from:     'from-amber-50',
-    to:       'to-yellow-50',
-    accent:   '#C8A951',
-  },
-]
+/* ── Spinning CTA circle button (matches City template exactly) ── */
+function SpinCTA({ href, label, sub, bg = '#1B0A02', textColor = '#DCDDA6', borderColor = '#DCDDA6' }) {
+  return (
+    <div className="flex flex-col items-center gap-3 py-16 px-6 text-center" style={{ background: bg }}>
+      <p style={{ fontFamily: 'Aboreto, cursive', fontSize: 'clamp(36px,10vw,70px)', color: textColor, lineHeight: 1.15 }}>
+        {label}
+      </p>
+      <p style={{ fontFamily: 'Yaldevi, sans-serif', fontSize: '16px', color: textColor, opacity: 0.8 }}>
+        {sub}
+      </p>
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="relative mt-4 flex items-center justify-center"
+        style={{ width: 90, height: 90 }}
+      >
+        {/* spinning dashed ring */}
+        <svg
+          width="90" height="90"
+          className="absolute inset-0 spin-border"
+          viewBox="0 0 90 90"
+        >
+          <circle
+            cx="45" cy="45" r="42"
+            fill="none"
+            stroke={borderColor}
+            strokeWidth="2"
+            strokeDasharray="8 6"
+            strokeLinecap="round"
+          />
+        </svg>
+        {/* inner solid ring */}
+        <svg width="90" height="90" className="absolute inset-0" viewBox="0 0 90 90">
+          <circle cx="45" cy="45" r="34" fill="none" stroke={borderColor} strokeWidth="9" opacity="0.9" />
+        </svg>
+        {/* center dot */}
+        <div
+          className="relative z-10 w-3 h-3 rounded-full"
+          style={{ background: borderColor }}
+        />
+      </a>
+    </div>
+  )
+}
 
-function Card({ ev, index }) {
+/* ── Flower SVG decoration ── */
+function FlowerDecor({ flip = false }) {
+  return (
+    <svg
+      width="90" height="96"
+      viewBox="0 0 90 96"
+      fill="none"
+      style={{ transform: flip ? 'scaleX(-1)' : 'none', opacity: 0.9 }}
+    >
+      <ellipse cx="28" cy="48" rx="26" ry="12" fill="#4CAF50" opacity="0.7" transform="rotate(-30 28 48)" />
+      <ellipse cx="28" cy="48" rx="26" ry="12" fill="#66BB6A" opacity="0.5" transform="rotate(10 28 48)" />
+      <ellipse cx="22" cy="30" rx="18" ry="8" fill="#388E3C" opacity="0.7" transform="rotate(-60 22 30)" />
+      <circle cx="38" cy="58" r="12" fill="#E91E63" opacity="0.85" />
+      <circle cx="38" cy="58" r="8" fill="#F06292" opacity="0.7" />
+      <circle cx="38" cy="58" r="4" fill="#FCE4EC" opacity="0.8" />
+      <circle cx="52" cy="42" r="9" fill="#C2185B" opacity="0.7" />
+      <circle cx="52" cy="42" r="5" fill="#E91E63" opacity="0.6" />
+      <circle cx="24" cy="68" r="7" fill="#AD1457" opacity="0.6" />
+    </svg>
+  )
+}
+
+/* ── Cane / bamboo border card ── */
+function EventCard({ title, subtitle, date, time, venue, index }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 36, scale: 0.96 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: true, margin: '-36px' }}
-      transition={{ delay: (index % 3) * 0.08, type: 'spring', bounce: 0.28 }}
-      whileHover={{ y: -5, boxShadow: '0 22px 48px rgba(200,169,81,0.12)' }}
-      className={`relative rounded-2xl p-6 border border-white/60 shadow-md
-                  overflow-hidden bg-gradient-to-br ${ev.from} ${ev.to}`}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-40px' }}
+      transition={{ delay: index * 0.12, duration: 0.6 }}
+      className="relative flex-shrink-0 flex flex-col items-center text-center"
+      style={{ width: 280 }}
     >
-      {/* Accent corner top-right */}
-      <div className="absolute top-0 right-0 w-12 h-12 opacity-[0.18]">
-        <svg viewBox="0 0 48 48"><path d="M48,0 L48,48 C48,20 28,0 0,0 Z" fill={ev.accent} /></svg>
-      </div>
-      {/* Accent corner bottom-left */}
-      <div className="absolute bottom-0 left-0 w-12 h-12 opacity-[0.18] rotate-180">
-        <svg viewBox="0 0 48 48"><path d="M48,0 L48,48 C48,20 28,0 0,0 Z" fill={ev.accent} /></svg>
-      </div>
+      {/* Cane border (SVG drawn) */}
+      <div className="relative w-full" style={{ paddingBottom: '120%' }}>
+        <svg
+          className="absolute inset-0 w-full h-full"
+          viewBox="0 0 280 336"
+          fill="none"
+          preserveAspectRatio="none"
+        >
+          {/* outer bamboo border */}
+          {[0,1,2,3,4,5,6,7].map(i => (
+            <rect
+              key={i}
+              x={4 + i * 0.3}
+              y={4 + i * 0.3}
+              width={272 - i * 0.6}
+              height={328 - i * 0.6}
+              rx="8"
+              fill="none"
+              stroke={i % 2 === 0 ? '#8B6914' : '#A07820'}
+              strokeWidth={i === 0 ? 2 : 0.5}
+              opacity={1 - i * 0.1}
+            />
+          ))}
+          {/* bamboo segments vertical left */}
+          {[60,120,180,240].map(y => (
+            <ellipse key={y} cx="10" cy={y} rx="4" ry="7" fill="#8B6914" opacity="0.5" />
+          ))}
+          {/* bamboo segments vertical right */}
+          {[60,120,180,240].map(y => (
+            <ellipse key={y} cx="270" cy={y} rx="4" ry="7" fill="#8B6914" opacity="0.5" />
+          ))}
+          {/* bamboo segments horizontal top */}
+          {[70,140,210].map(x => (
+            <ellipse key={x} cx={x} cy="10" rx="7" ry="4" fill="#8B6914" opacity="0.5" />
+          ))}
+          {/* bamboo segments horizontal bottom */}
+          {[70,140,210].map(x => (
+            <ellipse key={x} cx={x} cy="326" rx="7" ry="4" fill="#8B6914" opacity="0.5" />
+          ))}
+          {/* corner knots */}
+          {[[8,8],[272,8],[8,328],[272,328]].map(([cx,cy],i) => (
+            <circle key={i} cx={cx} cy={cy} r="6" fill="#6B4F10" opacity="0.7" />
+          ))}
+        </svg>
 
-      {/* Content */}
-      <div className="relative z-10 text-left">
-        {/* Date badge */}
-        <p className="font-sans text-[9px] text-maroon/40 tracking-wider uppercase mb-3">
-          {ev.day}
-        </p>
+        {/* Flower top-left */}
+        <div className="absolute -top-6 -left-4 z-10">
+          <FlowerDecor />
+        </div>
 
-        {/* Icon + title row */}
-        <div className="flex items-center gap-3 mb-1">
-          <span className="text-3xl">{ev.icon}</span>
-          <div>
-            <h3 className="font-script text-2xl text-maroon leading-none">{ev.title}</h3>
-            <p className="font-serif text-[11px] text-maroon/45 tracking-wider uppercase mt-0.5">
-              {ev.subtitle}
+        {/* Flower right-mid peeking */}
+        <div className="absolute top-1/3 -right-8 z-10">
+          <FlowerDecor flip />
+        </div>
+
+        {/* Card content */}
+        <div
+          className="absolute inset-0 flex flex-col items-center justify-center px-8 py-10"
+          style={{ top: 12, left: 12, right: 12, bottom: 12 }}
+        >
+          {/* Event name */}
+          <p
+            style={{
+              fontFamily: 'Aboreto, cursive',
+              fontSize: '28px',
+              lineHeight: 1.5,
+              color: '#45A086',
+            }}
+          >
+            {title}
+          </p>
+
+          {subtitle && (
+            <p style={{ fontFamily: 'Cormorant Upright, serif', fontSize: '13px', color: '#45A086', opacity: 0.8, marginTop: 2 }}>
+              {subtitle}
+            </p>
+          )}
+
+          <div className="w-16 h-px my-3" style={{ background: 'linear-gradient(90deg,transparent,#45A08660,transparent)' }} />
+
+          {/* Details */}
+          <div className="space-y-1.5">
+            <p style={{ fontFamily: 'Cormorant, serif', fontSize: '14px', color: '#45A086', lineHeight: 1 }}>
+              {date}
+            </p>
+            <p style={{ fontFamily: 'Cormorant, serif', fontSize: '14px', color: '#45A086', lineHeight: 1 }}>
+              {venue}
+            </p>
+            <p style={{ fontFamily: 'Cormorant, serif', fontSize: '14px', color: '#45A086', lineHeight: 1 }}>
+              {time}
             </p>
           </div>
-        </div>
 
-        {/* Details */}
-        <div className="mt-4 space-y-1.5">
-          <p className="font-sans text-sm text-maroon/75">🕐 {ev.time}</p>
-          <p className="font-sans text-sm text-maroon/75 font-medium">
-            📍 Solitare Hotel &amp; Resorts
-          </p>
+          <div className="mt-4">
+            <a
+              href={MAP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                fontFamily: 'Cormorant, serif',
+                fontWeight: 700,
+                fontSize: '14px',
+                color: '#E6D3FF',
+                lineHeight: 1,
+                textDecoration: 'underline',
+                textUnderlineOffset: '3px',
+              }}
+            >
+              See the route
+            </a>
+          </div>
         </div>
-
-        {/* Maps button */}
-        <motion.a
-          href={MAP}
-          target="_blank"
-          rel="noopener noreferrer"
-          whileHover={{ scale: 1.05, boxShadow: '0 4px 18px rgba(200,169,81,0.28)' }}
-          whileTap={{ scale: 0.95 }}
-          className="inline-flex items-center gap-2 mt-5 px-5 py-2.5
-                     bg-gradient-to-r from-gold-dark to-gold text-white
-                     text-[11px] font-sans tracking-wider uppercase
-                     rounded-full shadow-md"
-        >
-          <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd"
-              d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
-              clipRule="evenodd" />
-          </svg>
-          View on Maps
-        </motion.a>
       </div>
     </motion.div>
   )
 }
 
+const EVENTS = [
+  {
+    title: 'Carnival',
+    subtitle: 'Haldi Ceremony',
+    date: 'Sunday, 21st June 2026',
+    time: '1:00 PM Onwards',
+    venue: 'Solitare Hotel & Resorts',
+  },
+  {
+    title: 'Sangeet',
+    subtitle: 'DJ Night',
+    date: 'Sunday, 21st June 2026',
+    time: '8:00 PM Onwards',
+    venue: 'Solitare Hotel & Resorts',
+  },
+  {
+    title: 'Dikh',
+    subtitle: 'The Auspicious Beginning',
+    date: 'Monday, 22nd June 2026',
+    time: '12:30 PM',
+    venue: 'Solitare Hotel & Resorts',
+  },
+  {
+    title: 'Barat',
+    subtitle: 'The Grand Arrival',
+    date: 'Monday, 22nd June 2026',
+    time: '1:00 PM',
+    venue: 'Solitare Hotel & Resorts',
+  },
+  {
+    title: 'Phere',
+    subtitle: 'The Sacred Vows',
+    date: 'Monday, 22nd June 2026',
+    time: '3:00 PM',
+    venue: 'Solitare Hotel & Resorts',
+  },
+  {
+    title: 'Reception',
+    subtitle: 'An Evening of Celebration',
+    date: 'Monday, 22nd June 2026',
+    time: '9:00 PM Onwards',
+    venue: 'Solitare Hotel & Resorts',
+  },
+]
+
 export default function CeremonyCards() {
   return (
-    <section className="py-20 px-6 bg-cream">
-      <div className="max-w-md mx-auto">
-
-        {/* ── Section heading ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 28 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ type: 'spring', bounce: 0.35 }}
-          className="text-center mb-12"
+    <>
+      {/* ── Event cards horizontal scroll ── */}
+      <section
+        className="w-full py-12 overflow-hidden"
+        style={{ background: 'linear-gradient(to bottom, #100600, #1B0A02)' }}
+      >
+        <div
+          className="flex gap-6 px-8 overflow-x-auto pb-4"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
-          <p className="font-serif text-maroon/45 text-xs tracking-[0.45em] uppercase mb-2">
-            Join Us For
-          </p>
-          <h2 className="font-script text-5xl text-maroon">
-            Wedding Celebrations
-          </h2>
-        </motion.div>
-
-        {/* ── Day 1 divider ── */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="flex items-center gap-3 mb-5"
-        >
-          <div className="flex-1 h-px bg-gradient-to-r from-transparent to-gold/30" />
-          <p className="font-serif text-gold-dark text-xs tracking-widest whitespace-nowrap">
-            Day 1  ·  Sunday, 21st June 2026
-          </p>
-          <div className="flex-1 h-px bg-gradient-to-l from-transparent to-gold/30" />
-        </motion.div>
-
-        {/* Carnival + Sangeet */}
-        <div className="space-y-5 mb-10">
-          {EVENTS.slice(0, 2).map((ev, i) => <Card key={ev.title} ev={ev} index={i} />)}
+          {EVENTS.map((ev, i) => (
+            <EventCard key={ev.title} {...ev} index={i} />
+          ))}
         </div>
 
-        {/* ── Day 2 divider ── */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="flex items-center gap-3 mb-5"
+        {/* swipe hint */}
+        <p
+          className="text-center mt-4 text-xs tracking-widest uppercase opacity-40"
+          style={{ fontFamily: 'Yaldevi, sans-serif', color: '#F3ECBA' }}
         >
-          <div className="flex-1 h-px bg-gradient-to-r from-transparent to-gold/30" />
-          <p className="font-serif text-gold-dark text-xs tracking-widest whitespace-nowrap">
-            Day 2  ·  Monday, 22nd June 2026
-          </p>
-          <div className="flex-1 h-px bg-gradient-to-l from-transparent to-gold/30" />
-        </motion.div>
+          ← swipe to see all events →
+        </p>
+      </section>
 
-        {/* Dikh, Barat, Phere, Reception */}
-        <div className="space-y-5">
-          {EVENTS.slice(2).map((ev, i) => <Card key={ev.title} ev={ev} index={i + 2} />)}
-        </div>
-
-      </div>
-    </section>
+      {/* ── CTA: See the route ── */}
+      <SpinCTA
+        href={MAP_URL}
+        label={'See the\nroute'}
+        sub="Click to open the map"
+        bg="#1B0A02"
+        textColor="#DCDDA6"
+        borderColor="#DCDDA6"
+      />
+    </>
   )
 }

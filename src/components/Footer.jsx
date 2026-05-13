@@ -1,58 +1,116 @@
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 
+const WEDDING = new Date('2026-06-22T13:00:00')
+
+function getTimeLeft() {
+  const diff = WEDDING - new Date()
+  if (diff <= 0) return { days: 0, hours: 0, minutes: 0, seconds: 0 }
+  return {
+    days:    Math.floor(diff / 86400000),
+    hours:   Math.floor((diff / 3600000) % 24),
+    minutes: Math.floor((diff / 60000) % 60),
+    seconds: Math.floor((diff / 1000) % 60),
+  }
+}
+
+function pad(n) { return String(n).padStart(2, '0') }
+
 export default function Footer() {
+  const [time, setTime] = useState(getTimeLeft)
+
+  useEffect(() => {
+    const id = setInterval(() => setTime(getTimeLeft()), 1000)
+    return () => clearInterval(id)
+  }, [])
+
   return (
-    <footer className="relative py-16 px-6 bg-gradient-to-b from-cream to-rose/25 text-center overflow-hidden">
-      {/* Background mandala */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.035]">
-        <svg viewBox="0 0 280 280" className="w-56 h-56">
-          <circle cx="140" cy="140" r="130" fill="none" stroke="#C8A951" strokeWidth="0.6" />
-          <circle cx="140" cy="140" r="100" fill="none" stroke="#C8A951" strokeWidth="0.4" />
-          <circle cx="140" cy="140" r="70"  fill="none" stroke="#C8A951" strokeWidth="0.6" />
-          {Array.from({ length: 8 }).map((_, i) => (
-            <line key={i} x1="140" y1="10" x2="140" y2="270"
-              stroke="#C8A951" strokeWidth="0.35"
-              transform={`rotate(${i * 45} 140 140)`} />
+    <footer
+      className="w-full text-center relative overflow-hidden"
+      style={{ background: 'linear-gradient(to bottom, #0A0400, #1B0A02 40%, #0A0400)' }}
+    >
+      {/* Decorative floral mandala bg */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse 80% 60% at 50% 40%, rgba(200,169,81,0.07) 0%, transparent 70%)' }}
+      />
+
+      {/* Decorative arch / garland */}
+      <div className="relative flex justify-center pt-12 pb-4 opacity-30">
+        <svg width="280" height="60" viewBox="0 0 280 60" fill="none">
+          <path d="M10 58 Q70 10 140 8 Q210 6 270 58" stroke="#F3ECBA" strokeWidth="1.5" fill="none" strokeDasharray="4 3"/>
+          {[20,60,100,140,180,220,260].map(x => (
+            <circle key={x} cx={x} cy={58 - Math.sin((x/280)*Math.PI)*50} r="3" fill="#F3ECBA" opacity="0.6"/>
           ))}
         </svg>
       </div>
 
-      <motion.div
-        initial={{ opacity: 0, y: 28 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ type: 'spring', bounce: 0.3 }}
-        className="relative z-10 space-y-3"
-      >
-        {/* Names */}
-        <p className="font-script text-4xl text-maroon">Harshit &amp; Neha</p>
+      <div className="relative z-10 px-6 pb-14 max-w-md mx-auto">
 
-        {/* Wedding date — single date */}
-        <p className="font-serif text-xs text-maroon/40 tracking-[0.35em] uppercase">
-          22nd June 2026
-        </p>
+        {/* The countdown begins */}
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          style={{ fontFamily: 'Cormorant Upright, serif', fontSize: '28px', color: '#E79300', lineHeight: 1.1 }}
+        >
+          The countdown begins
+        </motion.p>
 
-        {/* Venue */}
-        <p className="font-sans text-[10px] text-maroon/30 tracking-wider">
-          Solitare Hotel &amp; Resorts
+        {/* Live timer */}
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.3, duration: 0.8 }}
+          className="mt-3 tabular-nums"
+          style={{
+            fontFamily: 'Cormorant Upright, serif',
+            fontWeight: 500,
+            fontSize: 'clamp(28px, 8vw, 42px)',
+            color: '#E79300',
+            letterSpacing: '0.02em',
+            lineHeight: 1,
+          }}
+        >
+          {pad(time.days)}:{pad(time.hours)}:{pad(time.minutes)}:{pad(time.seconds)}
+        </motion.p>
+        <p
+          className="mt-1 text-xs tracking-widest opacity-50"
+          style={{ fontFamily: 'Yaldevi, sans-serif', color: '#E79300' }}
+        >
+          DAYS · HRS · MINS · SECS
         </p>
 
         {/* Divider */}
-        <div className="pt-4 pb-1 text-gold/28 text-xs">─── ✦ ───</div>
+        <div className="w-24 h-px mx-auto my-6" style={{ background: 'linear-gradient(90deg,transparent,#F3ECBA50,transparent)' }} />
 
-        {/* Hashtag */}
+        {/* Family message */}
         <motion.p
-          className="font-sans text-sm text-gold-dark/55 tracking-widest"
-          whileHover={{ scale: 1.06 }}
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.5, duration: 0.8 }}
+          style={{ fontFamily: 'Cormorant Upright, serif', fontSize: '15px', color: '#E79300', lineHeight: 1.6 }}
         >
-          #HarshHitTheJackpot
+          Our families are excited that you are able to join us in celebrating
+          what we hope will be one of the happiest days of our lives.
         </motion.p>
 
-        {/* Love note */}
-        <p className="font-sans text-[9px] text-maroon/20 pt-2">
-          Made with ♥ for our special day
+        {/* Divider */}
+        <div className="w-24 h-px mx-auto my-6" style={{ background: 'linear-gradient(90deg,transparent,#F3ECBA50,transparent)' }} />
+
+        {/* Hashtag */}
+        <p style={{ fontFamily: 'Aboreto, cursive', fontSize: '14px', color: '#F3ECBA', opacity: 0.6 }}>
+          #HarshHitTheJackpot
         </p>
-      </motion.div>
+
+        {/* Copyright */}
+        <p className="mt-4 text-xs" style={{ fontFamily: 'Cormorant Upright, serif', color: '#F3ECBA', opacity: 0.35 }}>
+          © Harshit &amp; Neha 2026
+        </p>
+      </div>
     </footer>
   )
 }
