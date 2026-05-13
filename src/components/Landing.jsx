@@ -1,109 +1,205 @@
-import { motion } from 'framer-motion'
+import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import WaxSeal from './WaxSeal'
 
 export default function Landing({ onReveal }) {
+  const [sealBroken, setSealBroken] = useState(false)
+  const [envelopeOpen, setEnvelopeOpen] = useState(false)
+
+  const handleSealTap = () => {
+    setSealBroken(true)
+    // After seal breaks, open envelope
+    setTimeout(() => setEnvelopeOpen(true), 600)
+    // After envelope opens, transition to main content
+    setTimeout(() => onReveal(), 2200)
+  }
+
   return (
     <motion.div
-      className="fixed inset-0 flex flex-col items-center justify-center bg-cream z-50"
-      exit={{ opacity: 0, scale: 0.95 }}
+      className="fixed inset-0 flex flex-col items-center justify-center z-50 overflow-hidden"
+      exit={{ opacity: 0, y: -50 }}
       transition={{ duration: 0.8, ease: 'easeInOut' }}
     >
-      {/* Decorative border */}
-      <div className="absolute inset-4 border border-gold/30 rounded-lg pointer-events-none" />
-      <div className="absolute inset-6 border border-gold/15 rounded-lg pointer-events-none" />
+      {/* Rose/cream textured background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-rose via-cream to-blush" />
+      
+      {/* Subtle texture overlay */}
+      <div className="absolute inset-0 opacity-[0.04]" style={{
+        backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.5'/%3E%3C/svg%3E")`,
+      }} />
 
-      {/* Floating ornaments */}
-      <motion.div
-        className="absolute top-12 left-1/2 -translate-x-1/2 text-gold/40 text-4xl"
-        animate={{ y: [0, -8, 0] }}
-        transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-      >
-        ✦
-      </motion.div>
+      {/* Decorative gold corners */}
+      <div className="absolute top-6 left-6 w-16 h-16 border-t-2 border-l-2 border-gold/40 rounded-tl-sm" />
+      <div className="absolute top-6 right-6 w-16 h-16 border-t-2 border-r-2 border-gold/40 rounded-tr-sm" />
+      <div className="absolute bottom-6 left-6 w-16 h-16 border-b-2 border-l-2 border-gold/40 rounded-bl-sm" />
+      <div className="absolute bottom-6 right-6 w-16 h-16 border-b-2 border-r-2 border-gold/40 rounded-br-sm" />
 
-      {/* Envelope visual */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
+      {/* Floating gold particles */}
+      {[...Array(8)].map((_, i) => (
+        <motion.div
+          key={i}
+          className="absolute w-1 h-1 bg-gold/30 rounded-full"
+          style={{ left: `${15 + i * 10}%`, top: `${20 + (i % 3) * 25}%` }}
+          animate={{
+            y: [0, -20, 0],
+            opacity: [0.2, 0.6, 0.2],
+            scale: [1, 1.5, 1],
+          }}
+          transition={{
+            duration: 3 + i * 0.5,
+            repeat: Infinity,
+            delay: i * 0.4,
+          }}
+        />
+      ))}
+
+      {/* Top text */}
+      <motion.p
+        initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, delay: 0.3 }}
-        className="relative flex flex-col items-center"
+        transition={{ delay: 0.5, duration: 0.8 }}
+        className="relative z-10 font-serif text-maroon/50 text-xs tracking-[0.5em] uppercase mb-8"
       >
-        {/* Envelope body */}
-        <div className="relative w-72 h-48 md:w-80 md:h-52">
-          {/* Envelope back */}
-          <div className="absolute inset-0 bg-gradient-to-b from-cream-dark to-cream border border-gold/40 rounded-sm shadow-lg" />
-          
-          {/* Envelope flap (triangle) */}
-          <div className="absolute -top-0.5 left-0 right-0 h-24">
-            <svg viewBox="0 0 320 96" className="w-full h-full">
+        Wedding Invitation
+      </motion.p>
+
+      {/* ENVELOPE */}
+      <motion.div
+        initial={{ opacity: 0, y: 40, rotateX: 5 }}
+        animate={{ opacity: 1, y: 0, rotateX: 0 }}
+        transition={{ duration: 1, delay: 0.3, type: 'spring', stiffness: 100 }}
+        className="relative z-10"
+        style={{ perspective: '1000px' }}
+      >
+        <div className="relative w-80 h-56 md:w-96 md:h-64">
+          {/* Envelope body - textured rose */}
+          <motion.div
+            className="absolute inset-0 rounded-md shadow-2xl overflow-hidden"
+            animate={envelopeOpen ? { y: 20, scale: 0.95 } : {}}
+            transition={{ duration: 0.8 }}
+          >
+            {/* Rose paper texture */}
+            <div className="absolute inset-0 bg-gradient-to-br from-rose-dark via-rose to-blush" />
+            <div className="absolute inset-0 opacity-10" style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h40v40H0z' fill='none'/%3E%3Cpath d='M0 20 L20 0 L40 20 L20 40 Z' fill='%23C8A951' fill-opacity='0.1'/%3E%3C/svg%3E")`,
+            }} />
+            
+            {/* Gold trim border */}
+            <div className="absolute inset-2 border border-gold/30 rounded-sm" />
+
+            {/* Inner card visible */}
+            <motion.div
+              className="absolute top-8 left-6 right-6 bottom-6 bg-white/90 rounded-sm flex flex-col items-center justify-center border border-gold/10"
+              animate={envelopeOpen ? { y: -100, opacity: 0 } : {}}
+              transition={{ duration: 0.8, delay: 0.3 }}
+            >
+              <p className="font-script text-maroon/40 text-lg">You're Invited to</p>
+              <p className="font-script text-maroon text-2xl mt-1">Harshit & Neha's</p>
+              <p className="font-serif text-gold-dark text-xs tracking-[0.3em] uppercase mt-2">Wedding Celebration</p>
+            </motion.div>
+          </motion.div>
+
+          {/* Envelope flap (top triangle) */}
+          <motion.div
+            className="absolute -top-1 left-0 right-0 h-32 z-20 origin-top"
+            animate={envelopeOpen ? { rotateX: 180, opacity: 0 } : {}}
+            transition={{ duration: 0.8, ease: 'easeInOut' }}
+            style={{ transformStyle: 'preserve-3d' }}
+          >
+            <svg viewBox="0 0 384 128" className="w-full h-full drop-shadow-md">
+              <defs>
+                <linearGradient id="flapGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stopColor="#D4A090" />
+                  <stop offset="100%" stopColor="#E8C4B8" />
+                </linearGradient>
+              </defs>
               <path
-                d="M0,0 L160,80 L320,0 L320,0 L0,0 Z"
-                fill="url(#flapGradient)"
+                d="M0,0 L192,110 L384,0 L384,0 L0,0 Z"
+                fill="url(#flapGrad)"
                 stroke="#C8A951"
                 strokeWidth="0.5"
                 strokeOpacity="0.4"
               />
-              <defs>
-                <linearGradient id="flapGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stopColor="#F5EDE0" />
-                  <stop offset="100%" stopColor="#FDF8F0" />
-                </linearGradient>
-              </defs>
+              {/* Gold line detail on flap */}
+              <path
+                d="M40,5 L192,90 L344,5"
+                fill="none"
+                stroke="#C8A951"
+                strokeWidth="0.5"
+                strokeOpacity="0.3"
+              />
             </svg>
-          </div>
+          </motion.div>
 
-          {/* Inner card peek */}
-          <div className="absolute top-6 left-4 right-4 bottom-4 bg-white/80 border border-gold/20 rounded-sm flex items-center justify-center">
-            <p className="font-script text-maroon text-lg opacity-60">Harshit & Neha</p>
-          </div>
+          {/* WAX SEAL - positioned at the flap meeting point */}
+          <AnimatePresence>
+            {!sealBroken && (
+              <motion.div
+                className="absolute top-[55%] left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 cursor-pointer"
+                exit={{ scale: [1, 1.3, 0], rotate: [0, 10, -180], opacity: [1, 1, 0] }}
+                transition={{ duration: 0.6 }}
+                onClick={handleSealTap}
+                whileHover={{ scale: 1.08 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <WaxSeal />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
-
-        {/* Wax Seal - centered on envelope */}
-        <motion.div
-          className="relative -mt-8 z-10"
-          animate={{ rotateY: [0, 5, -5, 0] }}
-          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-        >
-          <WaxSeal />
-        </motion.div>
       </motion.div>
 
-      {/* Text */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.2, duration: 0.8 }}
-        className="mt-8 text-center"
-      >
-        <p className="font-serif text-maroon/70 text-sm tracking-[0.3em] uppercase mb-2">
-          Wedding Invitation
-        </p>
-        <h1 className="font-script text-gold-dark text-3xl md:text-4xl mb-6">
-          Harshit & Neha
-        </h1>
-      </motion.div>
+      {/* Tap instruction */}
+      <AnimatePresence>
+        {!sealBroken && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ delay: 1.5 }}
+            className="relative z-10 mt-8 text-center"
+          >
+            <motion.p
+              className="font-serif text-maroon/60 text-sm tracking-wider"
+              animate={{ opacity: [0.5, 1, 0.5] }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >
+              Tap the seal to open
+            </motion.p>
+            <motion.div
+              className="mt-3 text-gold/50"
+              animate={{ y: [0, 5, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            >
+              ↓
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-      {/* Tap to Reveal button */}
-      <motion.button
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1.8, duration: 0.6 }}
-        whileHover={{ scale: 1.05, boxShadow: '0 0 30px rgba(200, 169, 81, 0.4)' }}
-        whileTap={{ scale: 0.95 }}
-        onClick={onReveal}
-        className="mt-4 px-8 py-3 bg-gradient-to-r from-gold-dark via-gold to-gold-light text-white font-serif text-sm tracking-[0.2em] uppercase rounded-full shadow-lg hover:shadow-gold/40 transition-all duration-300 cursor-pointer"
-      >
-        ✧ Tap to Reveal ✧
-      </motion.button>
+      {/* Opening message after seal breaks */}
+      <AnimatePresence>
+        {sealBroken && !envelopeOpen && (
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            className="relative z-10 mt-6 font-script text-maroon text-xl"
+          >
+            Opening...
+          </motion.p>
+        )}
+      </AnimatePresence>
 
       {/* Bottom ornament */}
-      <motion.div
-        className="absolute bottom-8 text-gold/30 text-xs tracking-[0.5em]"
-        animate={{ opacity: [0.3, 0.7, 0.3] }}
-        transition={{ duration: 2, repeat: Infinity }}
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.4 }}
+        transition={{ delay: 2 }}
+        className="absolute bottom-8 font-serif text-gold/40 text-xs tracking-[0.5em] z-10"
       >
-        ─── ✦ ───
-      </motion.div>
+        #HarshHitTheJackpot
+      </motion.p>
     </motion.div>
   )
 }
