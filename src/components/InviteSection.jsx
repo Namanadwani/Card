@@ -4,21 +4,14 @@ import { motion } from 'framer-motion'
 function GaneshIcon() {
   return (
     <svg width="80" height="96" viewBox="0 0 80 96" fill="none" className="mx-auto">
-      {/* head */}
       <ellipse cx="40" cy="28" rx="22" ry="24" fill="#F3ECBA" opacity="0.15" stroke="#F3ECBA" strokeWidth="1" />
-      {/* ears */}
       <ellipse cx="14" cy="26" rx="9" ry="12" fill="#F3ECBA" opacity="0.10" stroke="#F3ECBA" strokeWidth="0.8"/>
       <ellipse cx="66" cy="26" rx="9" ry="12" fill="#F3ECBA" opacity="0.10" stroke="#F3ECBA" strokeWidth="0.8"/>
-      {/* trunk */}
       <path d="M40 48 Q28 56 30 68 Q32 74 38 72" stroke="#F3ECBA" strokeWidth="1.2" fill="none" opacity="0.6"/>
-      {/* tusk */}
       <path d="M52 44 Q62 36 60 28" stroke="#F3ECBA" strokeWidth="1" fill="none" opacity="0.5"/>
-      {/* body */}
       <ellipse cx="40" cy="76" rx="22" ry="18" fill="#F3ECBA" opacity="0.08" stroke="#F3ECBA" strokeWidth="0.8"/>
-      {/* crown */}
       <path d="M22 14 Q40 2 58 14" stroke="#F3ECBA" strokeWidth="1" fill="none" opacity="0.5"/>
       <circle cx="40" cy="6" r="3" fill="#F3ECBA" opacity="0.4"/>
-      {/* eyes */}
       <circle cx="33" cy="24" r="2" fill="#F3ECBA" opacity="0.7"/>
       <circle cx="47" cy="24" r="2" fill="#F3ECBA" opacity="0.7"/>
     </svg>
@@ -27,16 +20,27 @@ function GaneshIcon() {
 
 const reveal = {
   hidden:  { opacity: 0, y: 30 },
-  visible: (i = 0) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.15, duration: 0.8 },
-  }),
+  visible: (i = 0) => ({ opacity: 1, y: 0, transition: { delay: i * 0.15, duration: 0.8 } }),
 }
 
 function GoldLine() {
   return (
-    <div className="w-24 h-px mx-auto my-4" style={{ background: 'linear-gradient(90deg, transparent, #F3ECBA60, transparent)' }} />
+    <div
+      className="w-24 h-px mx-auto my-4"
+      style={{ background: 'linear-gradient(90deg, transparent, #F3ECBA60, transparent)' }}
+    />
+  )
+}
+
+function GoldDiamond() {
+  return (
+    <div className="flex items-center justify-center gap-3 my-2">
+      <div className="w-10 h-px" style={{ background: 'linear-gradient(90deg, transparent, #C8A95180)' }} />
+      <svg width="10" height="10" viewBox="0 0 10 10">
+        <rect x="1" y="1" width="8" height="8" rx="1" fill="#C8A951" opacity="0.5" transform="rotate(45 5 5)"/>
+      </svg>
+      <div className="w-10 h-px" style={{ background: 'linear-gradient(90deg, #C8A95180, transparent)' }} />
+    </div>
   )
 }
 
@@ -44,11 +48,9 @@ export default function InviteSection() {
   return (
     <section
       className="w-full text-center px-6 py-16 relative overflow-hidden"
-      style={{
-        background: 'linear-gradient(to bottom, #0D0500, #1B0A02 40%, #100600)',
-      }}
+      style={{ background: 'linear-gradient(to bottom, #0D0500, #1B0A02 40%, #100600)' }}
     >
-      {/* Subtle top glow */}
+      {/* Ambient glow */}
       <div
         className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-64 pointer-events-none"
         style={{ background: 'radial-gradient(ellipse, rgba(200,96,10,0.12) 0%, transparent 70%)' }}
@@ -65,7 +67,7 @@ export default function InviteSection() {
           ॐ श्री गणेशाय नम
         </motion.p>
 
-        {/* Ganesh illustration */}
+        {/* Ganesh */}
         <motion.div
           variants={reveal} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={1}
           className="my-6"
@@ -73,43 +75,49 @@ export default function InviteSection() {
           <GaneshIcon />
         </motion.div>
 
-        {/* Blessings of */}
+        {/* Blessings of — CORRECTED ancestors */}
         <motion.p
           variants={reveal} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={2}
-          className="text-base leading-snug"
-          style={{ fontFamily: 'Cormorant Upright, Georgia, serif', color: '#F3ECBA', fontSize: '20px', letterSpacing: '-0.03em' }}
+          style={{ fontFamily: 'Cormorant Upright, Georgia, serif', color: '#F3ECBA', fontSize: '18px', letterSpacing: '-0.03em', opacity: 0.8 }}
         >
-          With the heavenly blessings of
+          With the divine blessings of
         </motion.p>
         <motion.p
-          variants={reveal} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={2.5}
-          className="text-base leading-snug mt-1"
-          style={{ fontFamily: 'Cormorant Upright, Georgia, serif', color: '#F3ECBA', fontSize: '20px', letterSpacing: '-0.03em' }}
+          variants={reveal} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={2.4}
+          className="mt-1"
+          style={{ fontFamily: 'Cormorant Upright, Georgia, serif', color: '#F3ECBA', fontSize: '20px', letterSpacing: '-0.02em' }}
         >
-          Late Shri Laxmi Devi &amp; Late Shri Ram Adwani
+          Late Shri Narsinghlal Adwani
+        </motion.p>
+        <motion.p
+          variants={reveal} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={2.7}
+          style={{ fontFamily: 'Cormorant Upright, Georgia, serif', color: '#F3ECBA', fontSize: '20px', letterSpacing: '-0.02em' }}
+        >
+          &amp; Late Shri Nirmaladevi
         </motion.p>
 
         <GoldLine />
+        <GoldDiamond />
+        <GoldLine />
 
-        {/* Divider dashes */}
+        {/* Two family names */}
         <motion.p
           variants={reveal} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={3}
-          className="mb-1"
-          style={{ fontFamily: 'Cormorant Upright, Georgia, serif', color: '#F3ECBA60', fontSize: '24px', lineHeight: '1.5' }}
+          style={{ fontFamily: 'Cormorant Upright, Georgia, serif', color: '#F3ECBA', fontSize: '20px', letterSpacing: '-0.03em' }}
+        >
+          Mrs. Komal &amp; Mr. Sushil Adwani
+        </motion.p>
+
+        <motion.p
+          variants={reveal} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={3.3}
+          className="mt-1"
+          style={{ fontFamily: 'Cormorant Upright, Georgia, serif', color: '#F3ECBA60', fontSize: '22px' }}
         >
           ——
         </motion.p>
 
         <motion.p
-          variants={reveal} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={3.2}
-          className="text-base leading-snug"
-          style={{ fontFamily: 'Cormorant Upright, Georgia, serif', color: '#F3ECBA', fontSize: '20px', letterSpacing: '-0.03em' }}
-        >
-          Mrs. Komal &amp; Mr. Sushil Adwani
-        </motion.p>
-        <motion.p
-          variants={reveal} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={3.5}
-          className="text-base leading-snug mt-1"
+          variants={reveal} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={3.6}
           style={{ fontFamily: 'Cormorant Upright, Georgia, serif', color: '#F3ECBA', fontSize: '20px', letterSpacing: '-0.03em' }}
         >
           Mrs. Sunita &amp; Mr. Satish Varyani
@@ -132,12 +140,14 @@ export default function InviteSection() {
           INVITE
         </motion.p>
 
+        {/* Celebratory tagline instead of boring "You to join us" */}
         <motion.p
           variants={reveal} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={4.5}
-          className="mt-6 text-lg leading-tight"
-          style={{ fontFamily: 'Cormorant Upright, Georgia, serif', color: '#F3ECBA', fontSize: '20px', letterSpacing: '-0.05em' }}
+          className="mt-6"
+          style={{ fontFamily: 'Cormorant Upright, Georgia, serif', color: '#F3ECBA', fontSize: '20px', letterSpacing: '-0.04em', lineHeight: 1.4 }}
         >
-          You to join us in the wedding celebrations of
+          Two families. One celebration.<br/>
+          Come be a part of our joy.
         </motion.p>
 
         <GoldLine />
@@ -157,21 +167,31 @@ export default function InviteSection() {
           Harshit
         </motion.p>
 
+        {/* S/o under Harshit */}
         <motion.p
-          variants={reveal} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={5.3}
+          variants={reveal} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={5.2}
+          className="mt-1 mb-2"
+          style={{ fontFamily: 'Cormorant Upright, Georgia, serif', color: '#F3ECBA', fontSize: '16px', opacity: 0.75, letterSpacing: '-0.02em' }}
+        >
+          S/o Mr. Sushil Adwani &amp; Mrs. Komal Adwani
+        </motion.p>
+
+        <motion.p
+          variants={reveal} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={5.4}
           style={{
             fontFamily: 'Cormorant Upright, Georgia, serif',
             fontWeight: 400,
-            fontSize: 'clamp(48px, 14vw, 100px)',
+            fontSize: 'clamp(36px, 10vw, 72px)',
             color: '#F3ECBA',
-            lineHeight: '1.1',
+            lineHeight: '1.2',
           }}
         >
           &amp;
         </motion.p>
 
+        {/* NEHA big */}
         <motion.p
-          variants={reveal} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={5.6}
+          variants={reveal} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={5.7}
           className="leading-none"
           style={{
             fontFamily: 'Cormorant, Georgia, serif',
@@ -184,25 +204,22 @@ export default function InviteSection() {
           Neha
         </motion.p>
 
+        {/* D/o under Neha */}
+        <motion.p
+          variants={reveal} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={5.9}
+          className="mt-1"
+          style={{ fontFamily: 'Cormorant Upright, Georgia, serif', color: '#F3ECBA', fontSize: '16px', opacity: 0.75, letterSpacing: '-0.02em' }}
+        >
+          D/o Mr. Satish Varyani &amp; Mrs. Sunita Varyani
+        </motion.p>
+
         <GoldLine />
 
-        {/* Bride family */}
-        <motion.div
-          variants={reveal} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={6}
-          className="mt-4 space-y-1"
-        >
-          <p style={{ fontFamily: 'Cormorant Upright, Georgia, serif', color: '#F3ECBA', fontSize: '18px', letterSpacing: '-0.05em' }}>
-            Son of Mrs. Komal &amp; Mr. Sushil Adwani
-          </p>
-          <p style={{ fontFamily: 'Cormorant Upright, Georgia, serif', color: '#F3ECBA', fontSize: '18px', letterSpacing: '-0.05em' }}>
-            Daughter of Mrs. Sunita &amp; Mr. Satish Varyani
-          </p>
-        </motion.div>
-
+        {/* Closing line */}
         <motion.p
-          variants={reveal} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={6.5}
-          className="mt-5"
-          style={{ fontFamily: 'Cormorant Upright, Georgia, serif', color: '#F3ECBA', fontSize: '18px', letterSpacing: '-0.05em' }}
+          variants={reveal} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={6.2}
+          className="mt-2"
+          style={{ fontFamily: 'Cormorant Upright, Georgia, serif', color: '#F3ECBA', fontSize: '18px', letterSpacing: '-0.04em', opacity: 0.8 }}
         >
           On the following events
         </motion.p>

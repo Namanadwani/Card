@@ -162,6 +162,9 @@ export default function CoupleSection() {
                 </svg>
                 <p className="mt-3" style={{ fontFamily: 'Cormorant Upright, serif', fontSize: '20px', color: '#FBEEE2' }}>Harshit</p>
                 <p style={{ fontFamily: 'Yaldevi, sans-serif', fontSize: '11px', color: '#FBEEE2', opacity: 0.6 }}>The Groom</p>
+                <p className="mt-1" style={{ fontFamily: 'Cormorant Upright, serif', fontSize: '13px', color: '#FBEEE2', opacity: 0.65, lineHeight: 1.4 }}>
+                  S/o Mr. Sushil Adwani<br/>&amp; Mrs. Komal Adwani
+                </p>
               </div>
             </PhotoFrame>
 
@@ -182,22 +185,21 @@ export default function CoupleSection() {
                 </svg>
                 <p className="mt-3" style={{ fontFamily: 'Cormorant Upright, serif', fontSize: '20px', color: '#FBEEE2' }}>Neha</p>
                 <p style={{ fontFamily: 'Yaldevi, sans-serif', fontSize: '11px', color: '#FBEEE2', opacity: 0.6 }}>The Bride</p>
+                <p className="mt-1" style={{ fontFamily: 'Cormorant Upright, serif', fontSize: '13px', color: '#FBEEE2', opacity: 0.65, lineHeight: 1.4 }}>
+                  D/o Mr. Satish Varyani<br/>&amp; Mrs. Sunita Varyani
+                </p>
               </div>
             </PhotoFrame>
           </motion.div>
 
-          {/* Family names */}
-          <motion.div
+          {/* Photo placeholder note */}
+          <motion.p
             variants={reveal} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={2}
-            className="mt-10 space-y-2"
+            className="mt-10 text-center"
+            style={{ fontFamily: 'Yaldevi, sans-serif', fontSize: '13px', color: '#FBEEE2', opacity: 0.4, lineHeight: 1.6 }}
           >
-            <p style={{ fontFamily: 'Cormorant Upright, serif', fontSize: '16px', color: '#FBEEE2', opacity: 0.85 }}>
-              Son of Mrs. Komal &amp; Mr. Sushil Adwani
-            </p>
-            <p style={{ fontFamily: 'Cormorant Upright, serif', fontSize: '16px', color: '#FBEEE2', opacity: 0.85 }}>
-              Daughter of Mrs. Sunita &amp; Mr. Satish Varyani
-            </p>
-          </motion.div>
+            📸 Couple photos coming soon
+          </motion.p>
         </div>
       </section>
 
